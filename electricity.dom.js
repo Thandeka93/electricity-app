@@ -1,72 +1,96 @@
-// DOM element(s) references
-//const btn topupNow mt1 = document.querySelector(".btn topupNow mt1")
-//const button = document.querySelector('.btn.topupNow.mt1');
+//DOM reference
 const topupButton = document.querySelector('.btn.topupNow.mt1');
 const useButton = document.querySelector('.btn.useNow.mt1');
-//const button = document.querySelector('.btn useNow mt1')
- //const unitsAvailable = document.querySelector(".unitsAvailable")
+const unitsAvailable = document.querySelector('.unitsAvailable');
+const totalUnits = document.querySelector('.totalUnits');
+const totalAmount = document.querySelector('.totalAmount');
+const advanceTaken = document.querySelector('.advanceTaken');
 
-// Factory Function instance 
-const electricity =  Electricity();
+// Factory Function instance
+const electricity = Electricity();
 
-//declaring variables 
-let unitsAvailable = 0;
-let totalUnits = 0;
-let totalAmount = 0;
-let advanceUsed = false;
-let advanceAmount = 30;
-let advanceUnits = 21;
+// Retrieve stored values from local storage
+const storedUnitsAvailable = localStorage.getItem('unitsAvailable');
+const storedTotalUnits = localStorage.getItem('totalUnits');
+const storedTotalAmount = localStorage.getItem('totalAmount');
+const storedAdvanceTaken = localStorage.getItem('advanceTaken');
 
-//function to handle top-up
-function topUpElectricity(amount) {
-    var amount = document.querySelector("input[name='buyElectricity']:checked");
-
-    if (amount === 10) {
-        unitsAvailable+= 7;
-    } else if (amount === 20) {
-        unitsAvailable += 14;
-    } else if (amount === 50) {
-        unitsAvailable += 35;
+// Function to handle top-up
+function topUpElectricity() {
+    // Reference for radio button
+    const amount = document.querySelector("input[name='buyElectricity']:checked").value;
+    //conditional statement for top-up
+    if (amount === '10') {
+        electricity.topUpElectricity(10);
+    } else if (amount === '20') {
+        electricity.topUpElectricity(20);
+    } else if (amount === '50') {
+        electricity.topUpElectricity(50);
     }
-  
-    totalUnits += unitsAvailable;
-    totalAmount += amount;
+
+    // Store updated values in local storage
+    localStorage.setItem('unitsAvailable', electricity.getUnitsAvailable().toString());
+    localStorage.setItem('totalUnits', electricity.totalUnitsBought().toString());
+    localStorage.setItem('totalAmount', electricity.totalAmountSpent().toString());
+    localStorage.setItem('advanceTaken', electricity.advanceTaken().toString());
+
     updateDisplay();
-  }
-  topupButton .addEventListener("click", topUpElectricity)
+}
 
-  //function that will reflect the current values of units available
-  function updateDisplay() {
-    document.getElementById('unitsAvailable').innerHTML= unitsAvailable;
-    document.getElementById('totalUnits').innerHTML = totalUnits;
-    document.getElementById('totalAmount').innerHTML = totalAmount;
-  
-    if (advanceUsed) {
-      document.getElementById('advanceTaken').innerHTML = '✔';
+topupButton.addEventListener('click', topUpElectricity);
+
+// Function that will reflect the current values of units available
+function updateDisplay() {
+    unitsAvailable.innerHTML = electricity.getUnitsAvailable();
+    totalUnits.innerHTML = electricity.totalUnitsBought();
+    totalAmount.innerHTML = electricity.totalAmountSpent();
+
+    if (electricity.advanceTaken()) {
+        advanceTaken.innerHTML = '✔';
     } else {
-      document.getElementById('advanceTaken').innerHTML = '';
+        advanceTaken.innerHTML = '';
     }
-  }
+    // Store current display values in local storage
+    localStorage.setItem('unitsAvailableDisplay', unitsAvailable.innerHTML);
+    localStorage.setItem('totalUnitsDisplay', totalUnits.innerHTML);
+    localStorage.setItem('totalAmountDisplay', totalAmount.innerHTML);
+    localStorage.setItem('advanceTakenDisplay', advanceTaken.innerHTML);
 
-  // this function will handle the usage of appliances, checking if there are enough units 
-  function useAppliance(units, appliance) {
-    var appliance = document.querySelector("input[name='useElectricity']:checked");
-    if (unitsAvailable >= units) {
-        unitsAvailable -= units;
-      updateDisplay();
-      alert(`Appliance used successfully.`);
+    // Retrieve stored display values from local storage
+    localStorage.getItem('unitsAvailableDisplay');
+    localStorage.getItem('totalUnitsDisplay');
+    localStorage.getItem('totalAmountDisplay');
+    localStorage.getItem('advanceTakenDisplay');
+
+
+}
+
+// This function will handle the usage of appliances, checking if there are enough units
+function useAppliance() {
+    const appliance = document.querySelector("input[name='useElectricity']:checked").value;
+
+    let applianceUsed = electricity.useAppliance(appliance);
+    if (applianceUsed) {
+        updateDisplay();
+        alert(`Appliance used successfully.`);
     } else {
-      alert(`Not enough units available to use this appliance.`);
+        alert(`Not enough units available to use this appliance.`);
     }
-  }
-  useButton.addEventListener("click", useAppliance);
-  
+}
 
-  //this function will handle paying back the advance amount
-  function payBackAdvance() {
-    advanceUsed = false;
+useButton.addEventListener('click', useAppliance);
+
+// This function will handle paying back the advance amount
+function payAdvance() {
+    electricity.payAdvance();
+
+    // Store updated values in local storage
+    localStorage.setItem('unitsAvailable', electricity.getUnitsAvailable().toString());
+    localStorage.setItem('totalUnits', electricity.totalUnitsBought().toString());
+    localStorage.setItem('totalAmount', electricity.totalAmountSpent().toString());
+    localStorage.setItem('advanceTaken', electricity.advanceTaken().toString());
+
     updateDisplay();
-  }
+}
 
 
-  

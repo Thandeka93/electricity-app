@@ -8,8 +8,6 @@ function Electricity() {
     let unitBought = 0;
 
 
-   
-
     function topUpElectricity(amount) {
         if (amount === 10) {
             unitsAvailable += 7;
@@ -23,7 +21,8 @@ function Electricity() {
             unitsAvailable += 35;
             totalAmount += 50;
             unitBought += 35;
-        } else if (amount === 'advance' && !advanceHasTaken) {
+        } 
+        else if (amount === 'advance' && !advanceHasTaken) {
             unitsAvailable += advanceUnits;
             advancePaid = false
             advanceHasTaken = true;
@@ -66,6 +65,7 @@ function Electricity() {
     }
 
     function advanceTaken(amount) {
+        
         return advanceHasTaken && !advancePaid;
       
     }
