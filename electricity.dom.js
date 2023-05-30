@@ -9,12 +9,6 @@ const advanceTaken = document.querySelector('.advanceTaken');
 // Factory Function instance
 const electricity = Electricity();
 
-// Retrieve stored values from local storage
-const storedUnitsAvailable = localStorage.getItem('unitsAvailable');
-const storedTotalUnits = localStorage.getItem('totalUnits');
-const storedTotalAmount = localStorage.getItem('totalAmount');
-const storedAdvanceTaken = localStorage.getItem('advanceTaken');
-
 // Function to handle top-up
 function topUpElectricity() {
 
@@ -86,7 +80,7 @@ useButton.addEventListener('click', useAppliance);
 
 // This function will handle paying back the advance amount
 function payAdvance() {
-    
+
     electricity.payAdvance();
 
     // Store updated values in local storage
