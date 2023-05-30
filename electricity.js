@@ -64,7 +64,7 @@ function Electricity() {
         }
     }
 
-    function advanceTaken(amount) {
+    function advanceTaken() {
         
         return advanceHasTaken && !advancePaid;
       
