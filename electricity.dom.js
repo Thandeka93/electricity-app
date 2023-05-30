@@ -17,8 +17,10 @@ const storedAdvanceTaken = localStorage.getItem('advanceTaken');
 
 // Function to handle top-up
 function topUpElectricity() {
+
     // Reference for radio button
     const amount = document.querySelector("input[name='buyElectricity']:checked").value;
+
     //conditional statement for top-up
     if (amount === '10') {
         electricity.topUpElectricity(10);
@@ -41,15 +43,17 @@ topupButton.addEventListener('click', topUpElectricity);
 
 // Function that will reflect the current values of units available
 function updateDisplay() {
+
     unitsAvailable.innerHTML = electricity.getUnitsAvailable();
     totalUnits.innerHTML = electricity.totalUnitsBought();
     totalAmount.innerHTML = electricity.totalAmountSpent();
 
     if (electricity.advanceTaken()) {
-        advanceTaken.innerHTML = 'yes';
+        advanceTaken.innerHTML = '';
     } else {
         advanceTaken.innerHTML = '';
     }
+
     // Store current display values in local storage
     localStorage.setItem('unitsAvailableDisplay', unitsAvailable.innerHTML);
     localStorage.setItem('totalUnitsDisplay', totalUnits.innerHTML);
@@ -57,16 +61,16 @@ function updateDisplay() {
     localStorage.setItem('advanceTakenDisplay', advanceTaken.innerHTML);
 
     // Retrieve stored display values from local storage
-    localStorage.getItem('unitsAvailableDisplay');
-    localStorage.getItem('totalUnitsDisplay');
-    localStorage.getItem('totalAmountDisplay');
-    localStorage.getItem('advanceTakenDisplay');
-
+    unitsAvailable.innerHTML = localStorage.getItem('unitsAvailableDisplay');
+    totalUnits.innerHTML = localStorage.getItem('totalUnitsDisplay');
+    totalAmount.innerHTML = localStorage.getItem('totalAmountDisplay');
+    advanceTaken.innerHTML = localStorage.getItem('advanceTakenDisplay');
 
 }
 
 // This function will handle the usage of appliances, checking if there are enough units
 function useAppliance() {
+
     const appliance = document.querySelector("input[name='useElectricity']:checked").value;
 
     let applianceUsed = electricity.useAppliance(appliance);
@@ -82,6 +86,7 @@ useButton.addEventListener('click', useAppliance);
 
 // This function will handle paying back the advance amount
 function payAdvance() {
+    
     electricity.payAdvance();
 
     // Store updated values in local storage
