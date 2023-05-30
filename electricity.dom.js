@@ -46,7 +46,7 @@ function updateDisplay() {
     totalAmount.innerHTML = electricity.totalAmountSpent();
 
     if (electricity.advanceTaken()) {
-        advanceTaken.innerHTML = '✔';
+        advanceTaken.innerHTML = 'yes';
     } else {
         advanceTaken.innerHTML = '';
     }
