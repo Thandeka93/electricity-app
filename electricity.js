@@ -7,6 +7,14 @@ function Electricity() {
     let totalAmount = 0;
     let unitBought = 0;
 
+ // do we want to go with this or array? 
+//  let appliance = {
+//     'Stove': 10,
+//     'Kettle': 5,
+//     'TV': 3,
+//     'Fridge': 13
+// };
+
 
     function topUpElectricity(amount) {
         if (amount === 10) {
@@ -89,10 +97,3 @@ function Electricity() {
     }
 }
 
- // do we want to go with this or array? 
- let appliances = {
-    'Stove': 10,
-    'Kettle': 5,
-    'TV': 3,
-    'Fridge': 13
-};
